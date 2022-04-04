@@ -1,0 +1,58 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<div class="pd">
+    <center> <form class="form" id="searchform" action="{% url 'search_b_borrow' %}" method="get">
+    <div class="margin-bt">
+    <input type="text" class="col-5  form-control-lg"  placeholder="Enter book title..." name="q" type="text"/>
+    <button type="button"  class="btn btn-success form-control-lg margin-side" onclick="searchform.submit()">Search</button>
+    </div>
+</form>
+   </center>
+    <div>
+      <h1 class="margin-bt" >My Book</h1>
+      {%if user.is_superuser %}
+        <button align="center" class="btn btn-success margin-side align-r" href = "{%url 'book_create'%}">Add book</button>
+      {%endif%}
+    </div>
+    
+    {% if book_list %}
+
+    <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
+      <thead>
+           <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Genre</th>
+                <th>Cover</th>
+                <th>Date borrow</th>
+                <th>Date return</th>
+                <th>Status</th>
+           </tr>
+       </thead>
+   {% for info in book_list %}
+        
+        <tr>
+               <td>{{info.title.title}}</td>
+               <td>{{info.title.author}}</td>
+               <td>{{info.title.genre}}</td>
+               <td><img src="/library/media/{{info.title.cover}}" alt="" style="height: 120px;"></td>
+               <td>{{info.date_borrow}}</td>
+               <td>{{info.date_return}}</td>
+                  {%if info.title.available_borrow == 0%}
+                    <td><a class="btn btn-success" href="{% url 'book_return' info.title.title%}">Return</a></td>
+                  {% else %}
+                    <td><a class="btn btn-danger" href="">Returned</a></td>
+                  {%endif%}
+
+                  
+           </tr>
+
+   {% endfor %}
+
+    {% else %}
+      <p>There are no books.</p>
+    {% endif %} 
+  </div>
+{% endblock %}
+

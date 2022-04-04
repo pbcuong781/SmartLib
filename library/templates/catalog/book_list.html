@@ -1,0 +1,63 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <div class="pd">
+    <center> <form class="form" id="searchform" action="{% url 'search_b' %}" method="get">
+    <div class="form-group">
+    <input type="text" class="col-5  form-control-lg"  placeholder="Enter book title..." name="q" type="text"/>
+    <button type="button"  class="btn btn-success form-control-lg margin-side" onclick="searchform.submit()">Search</button>
+    </div>
+    </form>
+   </center>
+    <div class"margin-bt">
+      <span class="font-weight-bold" align="left" style="font-size:20px">Total: {{total}} books</span>
+      {%if user.is_superuser %}
+        <a align="center" class="btn btn-success margin-side align-r" href = "{%url 'book_create'%}">Add book</a>
+      {%endif%}
+    </div>
+    
+    {% if book_list %}
+
+    <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
+      <thead>
+           <tr>
+               <th>Title</th>
+               <th>Author</th>
+               <th>Genre</th>
+               <th>Cover</th>
+               {%if user.is_superuser%}
+                <th>Edit</th>
+                <th>Delete</th>
+                {%elif user.is_authenticated%}
+                  <th>Available Borrow</th>
+                {%endif%}
+              
+           </tr>
+       </thead>
+   {% for info in book_list %}
+           <tr>
+               <td>{{info.title}}</td>
+               <td>{{info.author}}</td>
+               <td>{{info.genre}}</td>
+               <td><img src="/library/media/{{info.cover}}" alt="" style="height: 120px;"></td>
+               {%if user.is_superuser%}
+                  <td><a class="btn btn-edit" href="{% url 'book_update' info.title%}">Edit</a></td>
+                  <td><a class="btn btn-delete" href="{% url 'book_delete' info.title%}">Delete</a></td>
+                {% elif user.is_authenticated %}
+                  {%if info.available_borrow == 1%}
+                    <td><a class="btn btn-success" href="{% url 'book_borrow' info.title%}">Borrow</a></td>
+                  {% else %}
+                    <td><a class="btn btn-danger" href="">Not Available</a></td>
+                  {%endif%}
+                {%endif%}
+                  
+           </tr>
+
+   {% endfor %}
+
+    {% else %}
+      <p>There are no books.</p>
+    {% endif %} 
+  </div>
+{% endblock %}
+

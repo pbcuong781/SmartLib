@@ -1,0 +1,30 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <div class="pd">
+    <div>
+        <h1 class="margin-bt" >Notifications</h1>
+    </div>
+    {% if noti_list %}
+
+    <table class="table" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Notification</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        {% for info in noti_list %}
+            <tr>
+                <td>{{info.message}}</td>
+                <td>{{info.time}}</td>   
+            </tr>
+
+        {% endfor %} 
+
+    {% else %}
+        <p>There are no message.</p>
+    {% endif %} 
+  </div>
+{% endblock %}
+

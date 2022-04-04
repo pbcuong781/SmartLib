@@ -1,0 +1,57 @@
+{% extends "base_generic.html" %}
+{%block style%}
+
+{%endblock%}
+{%block content%}
+<form class="form-auth" action="/signup/" method="post">
+  {% csrf_token %}
+	<div class="login">
+		<div class="login-screen">
+			<div class="app-title">
+				<h1>Sign Up</h1>
+			</div>
+			    <div class="login-form">
+
+            <div class="control-group">
+				      <input type="text" class="login-field" value="" placeholder="firstname" name="signup-firstname">
+				      <label class="login-field-icon fui-user" for="signup-firstname"></label>
+				    </div>
+
+            <div class="control-group">
+				      <input type="text" class="login-field" value="" placeholder="lastname" name="signup-lastname">
+				      <label class="login-field-icon fui-user" for="signup-lastname"></label>
+				    </div>
+
+				    <div class="control-group">
+				      <input type="text" class="login-field" value="" placeholder="username" name="signup-username">
+				      <label class="login-field-icon fui-user" for="signup-username"></label>
+				    </div>
+
+            <div class="control-group">
+              <input type="email" class="login-field" value="" placeholder="email" name="signup-email">
+              <label class="login-field-icon fui-user" for="signup-email"></label>
+            </div>
+                
+				    <div class="control-group">
+				    <input type="password" class="login-field" value="" placeholder="password" name="signup-pass">
+				    <label class="login-field-icon fui-lock" for="signup-pass"></label>
+				    </div>
+
+            <div class="control-group">
+              <input type="password" class="login-field" value="" placeholder="confirm password" name="signup-confirm-pass">
+              <label class="login-field-icon fui-lock" for="signup-confirm-pass"></label>
+            </div>
+
+            <div class="control-group">
+                {%for message in messages%}
+                    <p style="color :red;">{{message}}</p>
+                {% endfor %}
+            </div>
+
+				    <input type=submit class="btn btn-primary btn-large btn-block" value="Sign Up">
+				    <!--<a class="login-link" href="#">Lost your password?</a>-->
+			</div>
+		</div>
+	</div>
+</form>
+{% endblock %}

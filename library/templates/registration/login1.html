@@ -1,0 +1,34 @@
+{% extends "base_generic.html" %}
+
+{%block content%}
+<form class="form-auth" action="/login/" method="post">
+    {% csrf_token %}
+	<div class="login">
+		<div class="login-screen">
+			<div class="app-title">
+				<h1>Login</h1>
+			</div>
+			    <div class="login-form">
+				    <div class="control-group">
+				    <input type="text" class="login-field" value="" placeholder="username" name="login-name">
+				    <label class="login-field-icon fui-user" for="signup-name"></label>
+				    </div>
+                
+				    <div class="control-group">
+				    <input type="password" class="login-field" value="" placeholder="password" name="login-pass">
+				    <label class="login-field-icon fui-lock" for="signup-pass"></label>
+				    </div>
+
+                    <div class="control-group">
+                        {%for message in messages%}
+                            <p style="color :red;">{{message}}</p>
+                        {% endfor %}
+                    </div>
+
+				    <input type=submit class="btn btn-primary btn-large btn-block" value="Login">
+				    <!--<a class="login-link" href="#">Lost your password?</a>-->
+			</div>
+		</div>
+	</div>
+</form>
+{% endblock %}
